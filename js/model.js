@@ -40,19 +40,19 @@ class GameOfLifeModel {
     this.clearBoard();
   }
 
-  subscribeStateChange = (cb) => {
+  subscribeStateChange(cb) {
     this.onStateChange = cb;
-  };
+  }
 
-  setBoard = (board) => {
+  setBoard(board) {
     this.state.board = board;
-  };
+  }
 
-  setCellState = (row, col, state) => {
+  setCellState(row, col, state) {
     this.state.board[row][col] = state;
-  };
+  }
 
-  setScale = (scale) => {
+  setScale(scale) {
     const { rowCount, colCount, maxCanvasDimension, minScale, maxScale } =
       this.state;
 
@@ -70,32 +70,33 @@ class GameOfLifeModel {
         Math.min(Math.floor(scale), maxScale)
       );
     }
-  };
+  }
 
-  setRows = (rowCount) => {
+  setRows(rowCount) {
     this.state.rowCount = Math.min(rowCount, this.state.maxBoardDimension);
     this.clearBoard();
     this.setScale(this.state.scale);
-  };
+  }
 
-  setCols = (colCount) => {
+  setCols(colCount) {
     this.state.colCount = Math.min(colCount, this.state.maxBoardDimension);
     this.clearBoard();
     this.setScale(this.state.scale);
-  };
+  }
 
-  generateBoard = () =>
-    new Array(this.state.rowCount)
+  generateBoard() {
+    return new Array(this.state.rowCount)
       .fill(null)
       .map(() => new Array(this.state.colCount).fill(false));
+  }
 
-  clearBoard = () => {
+  clearBoard() {
     this.state.generation = 0;
     this.state.generationTime = null;
     this.setBoard(this.generateBoard());
-  };
+  }
 
-  fillBoardRandomly = () => {
+  fillBoardRandomly() {
     const startTime = Date.now();
     const board = this.generateBoard().map((row) =>
       row.map(() => Math.random() < this.state.randomFactor)
@@ -104,10 +105,10 @@ class GameOfLifeModel {
     this.state.generation = 0;
     this.state.generationTime = endTime - startTime;
     this.setBoard(board);
-  };
+  }
 
-  updateBoard = () =>
-    new Promise((resolve, reject) => {
+  updateBoard() {
+    return new Promise((resolve, reject) => {
       this.updateBoardWorker.onmessage = (e) => {
         const { newBoard, generationTime } = e.data;
         this.setBoard(newBoard);
@@ -127,15 +128,16 @@ class GameOfLifeModel {
         newBoard: this.generateBoard(),
       });
     });
+  }
 
-  initUpdateBoardWorker = () => {
+  initUpdateBoardWorker() {
     this.updateBoardWorker = new Worker('/js/updateBoardWorker.js');
-  };
+  }
 
-  terminateUpdateBoardWorker = () => {
+  terminateUpdateBoardWorker() {
     this.updateBoardWorker.terminate();
     this.initUpdateBoardWorker();
-  };
+  }
 }
 
 export default GameOfLifeModel;

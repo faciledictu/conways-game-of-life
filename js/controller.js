@@ -31,10 +31,10 @@ class GameOfLifeController {
     this.scaleDownBtn.addEventListener('click', this.handleChangeScale(-1));
     this.scaleUpBtn.addEventListener('click', this.handleChangeScale(1));
 
-    this.clearBtn.addEventListener('click', this.model.clearBoard);
+    this.clearBtn.addEventListener('click', this.handleClearBoard);
     this.playBtn.addEventListener('click', this.switchGameMode);
-    this.stepBtn.addEventListener('click', this.model.updateBoard);
-    this.randomizeBtn.addEventListener('click', this.model.fillBoardRandomly);
+    this.stepBtn.addEventListener('click', this.handleUpdateBoard);
+    this.randomizeBtn.addEventListener('click', this.handleRandomize);
   }
 
   startGame() {
@@ -88,6 +88,18 @@ class GameOfLifeController {
     }
 
     this.view.updateDimensions();
+  };
+
+  handleClearBoard = () => {
+    this.model.clearBoard();
+  };
+
+  handleUpdateBoard = () => {
+    this.model.updateBoard();
+  };
+
+  handleRandomize = () => {
+    this.model.fillBoardRandomly();
   };
 
   handleMouseDown = (e) => {
