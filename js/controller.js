@@ -52,7 +52,7 @@ class GameOfLifeController {
   }
 
   stopGame() {
-    this.model.terminateBoardUpdate();
+    this.model.terminateUpdateBoardWorker();
     clearTimeout(this.model.state.intervalId);
     this.model.state.isPlaying = false;
     this.model.state.intervalId = null;

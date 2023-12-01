@@ -36,7 +36,7 @@ class GameOfLifeModel {
         },
       }
     );
-
+    this.initUpdateBoardWorker();
     this.clearBoard();
   }
 
@@ -108,20 +108,16 @@ class GameOfLifeModel {
 
   updateBoard = () =>
     new Promise((resolve, reject) => {
-      this.updateBoardWorker = new Worker('/js/updateBoardWorker.js');
-
       this.updateBoardWorker.onmessage = (e) => {
         const { newBoard, generationTime } = e.data;
         this.setBoard(newBoard);
         this.state.generation += 1;
         this.state.generationTime = generationTime;
         resolve();
-        this.updateBoardWorker.terminate();
       };
 
       this.updateBoardWorker.onerror = (error) => {
         reject(error);
-        this.updateBoardWorker.terminate();
       };
 
       this.updateBoardWorker.postMessage({
@@ -132,8 +128,13 @@ class GameOfLifeModel {
       });
     });
 
-  terminateBoardUpdate = () => {
+  initUpdateBoardWorker = () => {
+    this.updateBoardWorker = new Worker('/js/updateBoardWorker.js');
+  };
+
+  terminateUpdateBoardWorker = () => {
     this.updateBoardWorker.terminate();
+    this.initUpdateBoardWorker();
   };
 }
 
