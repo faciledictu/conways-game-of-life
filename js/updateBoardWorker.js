@@ -62,12 +62,10 @@ const updateBoard = (params) => {
 };
 
 onmessage = (e) => {
-  console.time('start');
   const startTime = Date.now();
   const newBoard = updateBoard(e.data);
   const endTime = Date.now();
   const generationTime = endTime - startTime;
 
   postMessage({ newBoard, generationTime });
-  console.timeEnd('start');
 };
