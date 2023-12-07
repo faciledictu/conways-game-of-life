@@ -1,6 +1,6 @@
 # Игра «Жизнь»
 
-Тествое задание. Условие: Vanilla JS + CSS3 + HTML5, без использования сборщиков и библиотек
+Тестовое задание — реализовать The Game of Life на произвольном поле. Условие: Vanilla JS + CSS3 + HTML5, без использования сборщиков и библиотек.
 
 Деплой: [game-of-life-faciledictu.surge.sh](https://game-of-life-faciledictu.surge.sh)
 
